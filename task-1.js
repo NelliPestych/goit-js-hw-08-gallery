@@ -22,12 +22,22 @@ pictures.forEach(picture => {
 element.appendChild(fragment);
 
 const container = document.querySelector('.js-lightbox');
-// const containerImage = document.querySelector('.lightbox__image');
-//   pictures.forEach(picture => {
-//   const containerImage = document.querySelector('.lightbox__image');
-//   containerImage.src = picture.original;
-// });
+const containerImage = document.querySelector('.lightbox__image');
+
 element.addEventListener('click', openModal);
-function openModal() {
+function openModal(event) {
+  event.preventDefault();
+  const { target } = event;
+  const imgLink = target.dataset.source;
+  const imgAlt = target.alt;
+  containerImage.src = imgLink;
+  containerImage.alt = imgAlt;
   container.classList.add('is-open');
-};
+}
+
+const button = document.querySelector('.lightbox__button');
+button.addEventListener('click', closeModal);
+function closeModal() {
+  containerImage.src = '';
+  container.classList.remove('is-open');
+}
